@@ -1,0 +1,17 @@
+Telefones do morador com cpf = 77777777777
+SELECT e.cod_pais||' ('||e.cod_area||')' ||' '||e.numero||'' as "Números de Telefones" FROM tb_morador w, TABLE(w.telefones) e WHERE w.cpf = '77777777777';
+
+Nome do condominio que possui o espaco Horta Comunitaria
+SELECT w.nome AS "Condominios" FROM tb_condominio w, tb_espaco e WHERE e.nome = 'Horta Comunitária' AND e.codigo_cond = w.codigo;
+
+Selecionar o nome e os numeros de telefones dos gestores que ficaram encarregados de alguma reserva
+SELECT DISTINCT e.nome||' '|| t.cod_pais||' ('||t.cod_area||')' ||' '||t.numero||'' AS "Gestores" FROM tb_reserva r, tb_gestor e, TABLE(e.telefones) t, tb_gerencia g WHERE e.cpf = g.cpf_gestor AND r.gestor.cpf = e.cpf;
+
+Selecionar o nome do condominio que o gestor de nome Sasha Karen gerencia
+SELECT c.nome AS "Condominio" FROM tb_condominio c, tb_gerencia g WHERE g.gestor.nome = 'Sasha Karen' AND g.cond.codigo = c.codigo;
+
+Retornar o email de pessoas que fizeram reservas junto com a quantidade de ocorrencias do email
+SELECT p.email, COUNT(*) AS "Quantidade" FROM tb_morador p, tb_reserva r WHERE r.pessoa.cpf = p.cpf GROUP BY email;
+
+Retorna as avaliações dos gestores
+SELECT '('||a.avaliador.nome||')' ||' '||'avaliou'||' ('||g.nome||') '||'como'||' ('||a.mensagem||')' AS "Comentarios" FROM tb_gestor g, tb_avalia a WHERE a.avaliado.cpf = g.cpf; 
